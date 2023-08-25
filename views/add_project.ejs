@@ -1,0 +1,41 @@
+<%- include('./layout/header')%> <%- include('./layout/navbar')%>
+<>
+  <div class="adding-container">
+    <h2>Add a new Project</h2>
+    <form class="form-add" action="/add/add-project-to-db" method="post">
+      <!-- Just a demo for adding a task-->
+      <!-- Task creation-->
+      <div class="form-group">
+        <label for="project-title">Title:</label>
+        <input type="text" id="project-title" name="pjname" required />
+      </div>
+      <div class="form-group">
+        <label for="project-title">Category:</label>
+        <input type="text" id="project-title" name="category" required />
+      </div>
+      <div class="form-group">
+        <label for="project-description">Description:</label>
+        </div>
+        <div class="form-group">
+            <label for="startdate">Start Date</label>
+            <input type="date" class="form-date" id="startdate" name="startdate" >
+        </div>
+        <div class="form-group">
+            <label for="enddate">End Date</label>
+            <input type="date" class="form-date" id="enddate" name="enddate" >
+        </div>
+        <textarea
+          name="description"
+          id="project-description"
+          cols="20"
+          rows="6"
+          placeholder="This is the description of the project"
+        ></textarea>
+      </div> 
+      <input type="hidden" name="teamid" value="<%=teamid%>" />
+      <input type="submit" value="Create Project" />
+    </form>
+    <!-- Seperated it into a differnet form-->
+  </div>
+</main>
+<%-include( './layout/footer')%>

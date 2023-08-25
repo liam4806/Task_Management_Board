@@ -1,0 +1,28 @@
+<%- include('./layout/header')%>
+    <%- include('./layout/navbar')%>
+    <section>
+    <div class="TopBoard">
+        <% teams.forEach((team)=>{%> 
+            <div class="Team">
+                <a href="/team/<%=team._id%>"><h2><%=team.team_name%></h2></a>
+                <div class="task-container" style="overflow:scroll; width:350px; height:200px;">
+                
+                    <% team['projects'].forEach((project)=>{%> 
+                     <div class="tasklist">
+                        <div class="task">
+                            <a href="/team/<%=team._id%>/project/<%= project._id %>"><%=project.project_name%></a>
+                        </div>
+                    </div>
+                    <%}) %>
+                </div>
+            </div>
+            <%}) 
+        %></div>
+                
+            <div class="createboard">  <!-- Create a new board-->
+                <h3>Create a new Team</h3>
+                <a href="/team/create">Create Team</a>
+                </div>
+            
+        </section>
+<%-include( './layout/footer')%>

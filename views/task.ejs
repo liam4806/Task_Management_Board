@@ -1,0 +1,49 @@
+<%- include('./layout/header')%> <%- include('./layout/navbar')%>
+<main>
+    <div class="detail-container">
+            <div class="task-details">
+                <a href="/team/<%=teamid%>/project/<%=pjid%>">Back to Project Dashboard</a>
+                <h2>Task Details</h2>
+                <form id="add-users" class="form-details" action="/update/<%=teamid%>/project/<%=pjid%>/task/<%=taskdata._id%>?_method=PUT" method="POST"> 
+                <input type="hidden" name="_method" value="PUT">  
+                <div class="form-group">
+                    <label for="taskname">Task Name:</label>
+                    <textarea name="taskname" id="title" height="50px;"><%=taskdata.task_name%></textarea> 
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea name="description" id="description" cols="20" rows="6"><%=taskdata.description%></textarea> 
+                </div>
+                <div class="form-group">
+                    <label for="status">Status:</label>
+                    <select name="status">
+                        <% options.forEach(option => {%>
+                            <option value="<%=option%>" <% if(option === taskdata.status) {%>selected<%}%> > <%=option%> </option>
+                            <%})
+                        %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="startdate">Start Date</label>
+                    <input type="date" class="form-date" id="startdate" name="startdate" value="<%=taskdata.startdate.toISOString().substring(0, 10);%>">
+                </div>
+                <div class="form-group">
+                    <label for="enddate">End Date</label>
+                    <input type="date" class="form-date" id="enddate" name="enddate" value="<%=taskdata.enddate.toISOString().substring(0, 10);%>">
+                </div>
+                <div class="form-group">
+                    <label for="users">Users</label>
+                    <select name="users" id="users" multiple>
+                    <% users.forEach(user => { %>
+                <option value="<%= user.id %>" <% if (taskdata.users.includes(user.id)) { %>selected<% } %> > <%= user.name %></option>
+                    <% }); %>
+                </select>
+                </div>
+                <input type="submit" value="Save">
+            </form>
+            </div>
+    </div>
+</main>
+<script src="/js/user-mutli-select.js"></script>
+<%-include( './layout/footer')%>

@@ -1,0 +1,81 @@
+<%- include('./layout/header')%> <%- include('./layout/navbar')%>
+<section class="dashboard">
+  <div class="board_grid">
+    <div class="board_content">
+      <h1><%=team.team_name %> Dashboard</h1>
+      <!-- Should be changed based on team name-->
+      <div class="task-creation">
+        <a class="taskadd" href="/team/add_project/<%=team._id%>">Create a new project</a>
+      </div>
+          <div class="detail-container">
+            <div class="task-details">
+                <form id="add-users" class="form-details" action="/update/<%=team._id%>/?_method=PUT" method="POST"> 
+                <input type="hidden" name="_method" value="PUT">  
+                <div class="form-group">
+                    <label for="team_name">Team Name:</label>
+                    <textarea name="team_name" id="title" height="50px;"><%=team.team_name%></textarea> 
+                </div>
+                <div class="form-group">
+                    <label for="users">Users</label>
+                    <select name="users" id="users" multiple>
+                    <% users.forEach(user => { %>
+                <option value="<%= user.id %>" <% if (team.users.includes(user.id)) { %>selected<% } %> > <%= user.name %></option>
+                    <% }); %>
+                </select>
+                </div>
+                <input type="submit" value="Save">
+            </form>
+            <form action="/delete/team/<%=team._id%>/?_method=DELETE" method="POST" >
+                    <input type="hidden" name="_method" value="DELETE">
+                <input type="submit" value="Delete Team" class="delete">
+                </form>
+            </div>
+    </div>
+    <% if(team.projects.length>0) {%>
+          <table>
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Start Date</th>
+          </tr>
+        </thead>
+        <tbody>
+    <%}else{
+       %>
+       <%
+    }
+    
+    %>
+
+          <%team.projects.forEach((project)=>{%>
+          <tr>
+            <td>
+              <a href="/team/<%=team._id%>/project/<%=project.id%>"><%=project.project_name%></a>
+            </td>
+            <td>
+              <a href="/team/<%=team._id%>/project/<%=project.id%>"><%=project.category%></a>
+            </td>
+            <td>
+              <a href="/team/<%=team._id%>/project/<%=project.id%>"><%=project.description%></a>
+            </td>
+            <td><a href="/team/<%=team._id%>/project/<%=project.id%>"><%=project.startdate.toISOString().substring(0, 10);%></a></td>
+            <td><a href="/team/<%=team._id%>/project/<%=project.id%>"><%=project.enddate.toISOString().substring(0, 10);%></a></td>
+            <td>
+              <form action="/delete/<%=team._id%>/project/<%=project._id%>/?_method=DELETE" method="POST" >
+                    <input type="hidden" name="_method" value="DELETE">
+                <input type="submit" value="Delete Project" class="delete">
+                </form>
+            </td>
+            
+          </tr>
+          <%}) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<%-include( './layout/footer')%>

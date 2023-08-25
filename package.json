@@ -1,0 +1,26 @@
+{
+  "name": "jiraboard",
+  "version": "1.0.0",
+  "description": "Jiraboard web app that enables task tracking, collaboration, and progress monitoring with the users. Express.js is used as a framework.",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "memorystore": "^1.6.7",
+    "method-override": "^3.0.0",
+    "mongoose": "^7.4.4",
+    "node": "^20.5.1",
+    "nodemon": "^3.0.1",
+    "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0",
+    "path": "^0.12.7"
+  }
+}

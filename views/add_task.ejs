@@ -1,0 +1,63 @@
+<%- include('./layout/header')%> <%- include('./layout/navbar')%>
+<main>
+  <div class="adding-container">
+    <h2>Add a new Task</h2>
+    <form
+      id="add-users"
+      action="/add/add-task"
+      class="form-add"
+      method="POST">
+      <!-- Just a demo for adding a task-->
+      <!-- Task creation-->
+      <div class="form-group">
+        <label for="task-name">Name:</label>
+        <input type="text" id="task-name" name="task_name" required />
+      </div>
+      <div class="form-group">
+        <label for="task-description">Description:</label>
+        <textarea
+          name="description"
+          id="task-description"
+          cols="20"
+          rows="6"
+          placeholder="This is the description of the task"
+        ></textarea>
+        </div>
+        <div class="form-group">
+        <label for="status">Status:</label>
+        <select name="status">
+          <option>To Do</option>
+          <option>In Progress</option>
+          <option>Completed</option>
+        </select>
+      </div>
+      <div class="form-group">
+            <label for="startdate">Start Date</label>
+            <input type="date" class="form-date" id="startdate" name="startdate" >
+        </div>
+        <div class="form-group">
+            <label for="enddate">End Date</label>
+            <input type="date" class="form-date" id="enddate" name="enddate" >
+        </div>
+        <div class="form-group">
+          <input type="hidden" id="pjid" name="pjid" value="<%=pjid%>" />
+          <input type="hidden" id="teamid" name="teamid" value="<%=teamid%>"/>
+          <h5>Add a user</h5>
+          <label for="team-members">Select Team Members:</label>
+          <select name="userarray" id="team-members" multiple>
+            <% userwhole.forEach(user => { %>
+                        <% if (teamusers.includes(user.id)){%> 
+                            <option value="<%= user.id %>"><%=user.name%></option>
+                            <%}
+                        %>
+                    <% }); %>
+          </select>
+        </div>
+      </div>
+
+      <input type="submit" value="Create Task" />
+    </form>
+  </div>
+</main>
+<script src="/js/user-mutli-select.js"></script>
+<%-include( './layout/footer')%>
