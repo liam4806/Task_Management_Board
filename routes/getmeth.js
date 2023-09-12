@@ -6,14 +6,16 @@ const Project = require("../models/project");
 const Task = require("../models/task");
 const Team = require("../models/team");
 const User = require("../models/user");
+const res = require("express/lib/response");
 const router = express.Router();
 
 const authcheck = (req, res, next) => {
-  if(!req.user){
-    res.redirect('/login');
-  }else{
     next();
-  }
+  // if(!req.user){
+  //   res.redirect('/login');
+  // }else{
+  //   next();
+  // }
 };
 
 
@@ -104,7 +106,19 @@ router.get("/create", authcheck, (req, res) => {
 router.get("/:id", authcheck, async (req, res) => {
   //find that business using req.params
   const team = await Team.findById(req.params.id).populate("projects");
-  const users = await User.find({});
+  const userss = await User.find({});
+  const users = []
+  for(let i=0;i<userss.length;i++){
+    if(team.users.includes(userss[i].id)){
+      let userobj={
+        id:userss[i].id,
+        name:userss[i].name,
+      } 
+      users.push(userobj)
+    }else{
+      continue
+    }
+  }
   res.render("projectlist", { team: team, users: users,});
 });
 

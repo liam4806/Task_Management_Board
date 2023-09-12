@@ -1,17 +1,17 @@
 <%- include('./layout/header')%>
     <%- include('./layout/navbar')%>
     <div>
-        <form action="/add/team" method="POST" class="teamcreate" id="add-users" novalidate>  
+        <form action="/add/team" method="POST" class="teamcreate" id="add-users">  
             <div class="team-creation">
                 <h2>Create Team</h2>
             <div class="form-group">
                 <label for="team_name">Team Name</label>
-                <textarea class="textarea" name="team_name" id="team_name" cols="30" rows="3" required></textarea>
+                <textarea class="textarea" name="team_name" id="team_name" cols="30" rows="3" placeholder="Enter Team name" required></textarea>
             </div>
             <div class="form-group">
           <h5>Add users</h5>
           <label for="team-members">Select Team Members:</label>
-          <select name="userarray" id="team-members" multiple>
+          <select name="userarray" id="team-members" multiple required>
             <% userdata.forEach(user=>{%> 
                 <option value="<%=user._id%>"><%= user.name %></option>
                 <%}); %>

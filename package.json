@@ -16,7 +16,7 @@
     "express-session": "^1.17.3",
     "memorystore": "^1.6.7",
     "method-override": "^3.0.0",
-    "mongoose": "^7.4.4",
+    "mongoose": "^7.5.0",
     "node": "^20.5.1",
     "nodemon": "^3.0.1",
     "passport": "^0.6.0",

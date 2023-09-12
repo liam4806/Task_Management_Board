@@ -60,11 +60,12 @@ app.use("/delete", deleteRoute);
 
 
 const authcheck= (req,res,next)=>{
-  if(!req.user){
-    res.redirect('/login');
-  }else{
     next();
-  }
+  // if(!req.user){
+  //   res.redirect('/login');
+  // }else{
+  //   next();
+  // }
 }
 
 

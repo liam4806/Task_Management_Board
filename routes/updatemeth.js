@@ -10,11 +10,12 @@ const User = require("../models/user");
 const router = express.Router();
 
 const authcheck = (req, res, next) => {
-  if(!req.user){
-    res.redirect('/login');
-  }else{
     next();
-  }
+  // if(!req.user){
+  //   res.redirect('/login');
+  // }else{
+  //   next();
+  // }
 };
 
 //PUT method
@@ -79,7 +80,12 @@ router.put("/:teamid", (req, res) => {
   Team.findById(req.params.teamid).then((data) => {
     data.team_name = req.body.team_name;
     data.users = req.body.users;
-    data.save().then(() => {
+    data.save().then(async() => {
+      for (let i = 0; i < req.body.users.length; i++) {
+        await User.findByIdAndUpdate(req.body.users[i], {
+          $pull: { teamids: req.params.teamid },
+        });
+      }
       res.redirect(`/team/${req.params.teamid}`);
     });
   });

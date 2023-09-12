@@ -5,7 +5,12 @@ const UserSchema = new Schema ({
     name: String,
     email: String,
     Googleid:String,
-
+    teamids: [
+        {
+        type: Schema.Types.ObjectId,
+        ref: 'Team'
+        }
+    ]
 });
 
 

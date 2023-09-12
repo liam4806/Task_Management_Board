@@ -13,11 +13,11 @@
                 <input type="hidden" name="_method" value="PUT">  
                 <div class="form-group">
                     <label for="team_name">Team Name:</label>
-                    <textarea name="team_name" id="title" height="50px;"><%=team.team_name%></textarea> 
+                    <textarea name="team_name" id="title" height="50px;" required><%=team.team_name%></textarea> 
                 </div>
                 <div class="form-group">
                     <label for="users">Users</label>
-                    <select name="users" id="users" multiple>
+                    <select name="users" id="users" multiple required>
                     <% users.forEach(user => { %>
                 <option value="<%= user.id %>" <% if (team.users.includes(user.id)) { %>selected<% } %> > <%= user.name %></option>
                     <% }); %>
