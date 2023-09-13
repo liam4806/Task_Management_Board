@@ -10,12 +10,12 @@ const User = require("../models/user");
 const router = express.Router();
 
 const authcheck = (req, res, next) => {
+    // next();
+  if(!req.user){
+    res.redirect('/login');
+  }else{
     next();
-  // if(!req.user){
-  //   res.redirect('/login');
-  // }else{
-  //   next();
-  // }
+  }
 };
 
 //PUT method

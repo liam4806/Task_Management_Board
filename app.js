@@ -60,12 +60,11 @@ app.use("/delete", deleteRoute);
 
 
 const authcheck= (req,res,next)=>{
+  if(!req.user){
+    res.redirect('/login');
+  }else{
     next();
-  // if(!req.user){
-  //   res.redirect('/login');
-  // }else{
-  //   next();
-  // }
+  }
 }
 
 
@@ -74,8 +73,13 @@ app.get("/", authcheck, async (req, res) => {
   const teams = await Team.find({});
   const arrr = [];
   for (let i = 0; i < teams.length; i++){
-    const teamp = await Team.findById(teams[i]._id).populate("projects");
-    arrr.push(teamp);
+    if(req.user.teamids.includes(teams[i]._id)){
+          const teamp = await Team.findById(teams[i]._id).populate("projects");
+          arrr.push(teamp);
+    }else{
+      continue
+    }
+
   };
   res.render("home",{ teams: arrr});
 

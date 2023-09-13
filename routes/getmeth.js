@@ -10,12 +10,12 @@ const res = require("express/lib/response");
 const router = express.Router();
 
 const authcheck = (req, res, next) => {
+    // next();
+  if(!req.user){
+    res.redirect('/login');
+  }else{
     next();
-  // if(!req.user){
-  //   res.redirect('/login');
-  // }else{
-  //   next();
-  // }
+  }
 };
 
 
