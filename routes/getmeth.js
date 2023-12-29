@@ -1,4 +1,4 @@
-const express = require("express");
+ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
@@ -45,7 +45,7 @@ router.get("/:teamid/project/:pjid", authcheck, async (req, res) => {
     userdata.push(userobj);
   }
   Project.findById(req.params.pjid).then((data) => {
-    res.render("projects", {
+    res.render("taskwithprog", {
       teamid: req.params.teamid,
       pjid: req.params.pjid,
       projdata: data,

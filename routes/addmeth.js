@@ -32,7 +32,6 @@ router.post("/add-task", (req, res) => {
     enddate: req.body.enddate,
     users: req.body.userarray,
   });
-  console.log(req.body)
   Project.findById(req.body.pjid).then((data) => {
     data.tasks.push(Data.id);
     data.save();

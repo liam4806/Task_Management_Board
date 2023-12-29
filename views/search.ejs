@@ -1,0 +1,88 @@
+<%- include('./layout/header')%> 
+<%- include('./layout/navbar')%>
+
+<body>
+<h2>Search Friends</h2>
+<form action="/profile/search" method="post">
+	<input type="text" name="searchfriend" placeholder="username">
+	<input type="submit" value="search">
+</form>
+<hr>
+    <% result.forEach((user)=> {%> 
+        <% if(user.id == loguser.id){%>
+        <div class="usercard col-lg-3">
+		<h4 class="usercard-name"><%=user.name%></h4>
+        <h5>Yourself</h5>
+		<p class="usercard-username"><%=user.email%></p>
+	</div>
+            <%} else{%>
+                <div class="usercard col-lg-3">
+		<h4 class="usercard-name"><%=user.name%></h4>
+		<p class="usercard-username"><%=user.email%></p>
+		<form action="" method="get" class="add_friend">
+            <input type="hidden" name="receiverName" class="receiverName" value="<%=user.id%>">
+            <input type="hidden" name="sender-name" class="sender-name" value="<%=loguser.id%>">
+            <button type="submit" id="" onclick="addFriend('<%=user.id%>')" class="btn add accept friend-add"><i class="fa fa-user"></i> Add Friend</button>
+        </form>
+	</div>
+                <%}
+        %>
+        
+        <%})
+    %>
+    
+<div class="container">
+      <div class="header clearfix">
+        <nav id="reload">
+          <ul class="nav nav-pills pull-right">
+
+              <input type="hidden"  id="currentuser" value="<%=loguser.name%>">
+              <li role="presentation"><a href="/search">Search <i class="fa fa-search"></i></a></li>
+              <li>
+                <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-user-plus"></i>
+                <span class="caret"></span></button>
+                  <ul class="dropdown-menu" style="width: 300px; height: 400px; overflow-y: scroll;">
+                    <% if(received){%>
+                    <% received.forEach((users)=> {%>
+                        <li style="border-bottom: 1px solid lightgray">
+                      <a href="#">
+                          <div>
+                            <h4><%= users.name%></h4>
+                          </div>
+                          <div>
+                              
+                              <div style="width: 50%; display: inline;">
+                                <input type="hidden" name="senderId" id="senderId" value="<%= users.userId%>">
+                                <input type="hidden" name="senderName" id="senderName" value="<%= users.name%>">
+                                <button type="submit" id="accept_friend" class="btn btn-primary" style="width: 8em">Accept</button>
+                              </div>
+                              <div style="width: 50%;  display: inline;">
+                                 <input type="hidden" name="user_Id" id="user_Id" value="<%= users.userId%>">
+                                <button type="submit" id="cancel_friend" class="btn btn-primary" style="width: 8em">Cancel</button>
+                              </div>
+                          </div>    
+                      </a>
+                    </li>
+                    <%})
+                    %>
+                    <%}
+            else {%> 
+                    <div>
+                      <h4 style="text-align:center">No requests</h4>
+                    </div>   
+                    <%}
+                    %>
+                  </ul>
+                </div>
+              </li>
+          </ul>
+        </nav>
+      </div>
+
+
+    </div>
+	
+</body>
+
+<%-include( './layout/footer')%>

@@ -13,6 +13,11 @@ const getRoute = require("./routes/getmeth");
 const addRoute = require("./routes/addmeth");
 const updateRoute = require("./routes/updatemeth");
 const deleteRoute = require("./routes/deletemeth");
+const profileRoute = require("./routes/profile");
+const http = require("http");
+const server = require("http").createServer();
+const io = require("socket.io")(server);
+require("./socket/friend")(io);
 mongoose.connect(
   keys.mongodb.urlforDB,
   {
@@ -57,6 +62,9 @@ app.use("/add", addRoute);
 app.use("/update", updateRoute);
 //route for delete
 app.use("/delete", deleteRoute);
+app.use("/profile", profileRoute);
+
+
 
 
 const authcheck= (req,res,next)=>{
