@@ -1,7 +1,8 @@
 # Task Management Board
-### Task Management Board web app that enables task tracking, collaboration, and progress monitoring with the users using Express.js.
 
-#### Tech Stacks: Express.js, HTML, CSS, JavaScript, Socket.io, and Passport.js
+### Tech Stacks: Express.js, HTML, CSS, JavaScript, MongoDB, Socket.io, and Passport.js
+
+### Task Management Board web app that enables task tracking, collaboration, and progress monitoring with the users using Express.js.
 
 Feature: A user(Signed up with Google ID) can create a Team with users. 
 
