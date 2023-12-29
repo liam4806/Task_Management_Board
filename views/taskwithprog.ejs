@@ -1,0 +1,88 @@
+<%- include('./layout/header')%>
+    <%- include('./layout/navbar')%>
+    <main>
+<body>
+<div class="detail-container">
+            <a href="/team/<%=teamid%>">Back to Team dashboard</a>
+            <div class="project-details">
+                <h1>Proj: <%=projdata.project_name%> Dashboard</h1>
+                <form class="form-details" action="/update/project/<%=projdata._id%>?_method=PUT" method="post">  <!-- Just an example action for form submitting-->
+                <input type="hidden" name="_method" value="PUT">  <!-- since it is updating the DB, I think it should be in PUT method. This is just a demo code.-->
+                <div class="form-group">
+                    <label for="pjname">Project Name:</label>
+                    <textarea name="pjname" id="title" height="50px;"><%=projdata.project_name%></textarea> 
+                    <!-- The contents will be dynamic-->
+                </div>
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <textarea name="category" id="category" height="50px;"><%=projdata.category%></textarea> 
+                    <!-- The contents will be dynamic-->
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea name="description" id="description" cols="20" rows="6"><%=projdata.description%></textarea> 
+                </div>
+                </div>
+                <div class="form-group">
+                    <label for="startdate">Start Date</label>
+                    <input type="date" class="form-date" id="startdate" name="startdate" value="<%=projdata.startdate.toISOString().substring(0, 10);%>" >
+                </div>
+                <div class="form-group">
+                    <label for="enddate">End Date</label>
+                    <input type="date" class="form-date" id="enddate" name="enddate" value="<%=projdata.enddate.toISOString().substring(0, 10);%>">
+                </div>
+                <input type="hidden" name ="teamid" value="<%=teamid%>">
+                <input type="submit" value="Save">
+                </form>
+                <form action="/delete/<%=teamid%>/project/<%=projdata._id%>?_method=DELETE" method="POST" >
+                    <input type="hidden" name="_method" value="DELETE">
+                <input type="submit" value="Delete Project" class="delete">
+                </form>
+                <form action="/team/<%=teamid%>/project/task/<%=projdata._id%>" method="GET">
+                    <input type="submit" value="Add task">
+                </form>
+            </div>
+            
+<div class="row">
+    <div class="column">
+    <div class="content">
+      <h2>To do</h2>
+    <%taskdata.forEach((task)=>{%> 
+        <% if(task.status === "To Do"){%> 
+        <div class="taskbox">
+            <a href="/team/<%=teamid%>/project/<%=pjid%>/task/<%=task.id%>"><%=task.task_name%></a>
+    </div>  
+            <%} %>
+        <%})%>
+  </div>
+  </div>
+  <div class="column">
+    <div class="content">
+      <h2>In Progress</h2>
+      <%taskdata.forEach((task)=>{%> 
+        <% if(task.status === "In Progress"){%> 
+        <div class="taskbox">
+            <a href="/team/<%=teamid%>/project/<%=pjid%>/task/<%=task.id%>"><%=task.task_name%></a>
+    </div>  
+            <%} %>
+        <%})%>
+    </div>
+  </div>
+  <div class="column">
+    <div class="content">
+      <h2>Completed</h2>
+    <%taskdata.forEach((task)=>{%> 
+        <% if(task.status === "Completed"){%> 
+        <div class="taskbox">
+            <a href="/team/<%=teamid%>/project/<%=pjid%>/task/<%=task.id%>"><%=task.task_name%></a>
+    </div>  
+            <%} %>
+        <%})%>
+    </div>
+  </div>
+</div>
+</body>
+
+    </main>
+<%-include( './layout/footer')%>
+

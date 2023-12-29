@@ -10,12 +10,15 @@ const User = require("../models/user");
 const router = express.Router();
 
 const authcheck = (req, res, next) => {
+  // next()
   if(!req.user){
     res.redirect('/login');
   }else{
     next();
   }
 };
+
+
 
 //POST methods
 
@@ -29,7 +32,6 @@ router.post("/add-task", (req, res) => {
     enddate: req.body.enddate,
     users: req.body.userarray,
   });
-  console.log(req.body)
   Project.findById(req.body.pjid).then((data) => {
     data.tasks.push(Data.id);
     data.save();
@@ -74,13 +76,24 @@ router.post("/project/task/detail/:id", async (req, res) => {
 });
 
 //endpoint for creating team
-router.post("/team", (req, res) => {
+router.post("/team", async (req, res) => {
   const Data = new Team({
     team_name: req.body.team_name,
     users: req.body.userarray,
   });
   Data.save()
-    .then(() => {
+    .then(async () => {
+    if (Array.isArray(req.body.userarray)=== false) {
+      let useradd = await User.findById(req.body.userarray);
+      useradd.teamids.push(Data._id);
+      useradd.save();
+    } else {
+      for (let i = 0; i < req.body.userarray.length; i++) {
+        let useradd = await User.findById(req.body.userarray[i]);
+        useradd.teamids.push(Data._id);
+        useradd.save();
+      }
+    }
       res.redirect(`/`);
     })
     .catch((err) => console.log(err));

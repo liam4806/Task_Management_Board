@@ -6,9 +6,11 @@ const methodOverride = require("method-override");
 const Project = require("../models/project");
 const Task = require("../models/task");
 const Team = require("../models/team");
+const User = require("../models/user");
 const router = express.Router();
 
 const authcheck = (req, res, next) => {
+    // next();
   if(!req.user){
     res.redirect('/login');
   }else{
@@ -47,6 +49,11 @@ router.delete("/team/:id", async (req, res) => {
         const project = await Project.findById(team.projects[i]);
         projdelete(project);
         await Project.findByIdAndDelete({ _id: team.projects[i]._id });
+    }
+    for (let i = 0; i < team.users.length; i++) {
+      await User.findByIdAndUpdate(team.users[i], {
+        $pull: { teamids: req.params.id },
+      });
     }
     await Team.findByIdAndDelete({_id: req.params.id});
     res.redirect("/");

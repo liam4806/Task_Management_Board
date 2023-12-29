@@ -13,6 +13,11 @@ const getRoute = require("./routes/getmeth");
 const addRoute = require("./routes/addmeth");
 const updateRoute = require("./routes/updatemeth");
 const deleteRoute = require("./routes/deletemeth");
+const profileRoute = require("./routes/profile");
+const http = require("http");
+const server = require("http").createServer();
+const io = require("socket.io")(server);
+require("./socket/friend")(io);
 mongoose.connect(
   keys.mongodb.urlforDB,
   {
@@ -57,6 +62,9 @@ app.use("/add", addRoute);
 app.use("/update", updateRoute);
 //route for delete
 app.use("/delete", deleteRoute);
+app.use("/profile", profileRoute);
+
+
 
 
 const authcheck= (req,res,next)=>{
@@ -73,8 +81,13 @@ app.get("/", authcheck, async (req, res) => {
   const teams = await Team.find({});
   const arrr = [];
   for (let i = 0; i < teams.length; i++){
-    const teamp = await Team.findById(teams[i]._id).populate("projects");
-    arrr.push(teamp);
+    if(req.user.teamids.includes(teams[i]._id)){
+          const teamp = await Team.findById(teams[i]._id).populate("projects");
+          arrr.push(teamp);
+    }else{
+      continue
+    }
+
   };
   res.render("home",{ teams: arrr});
 
