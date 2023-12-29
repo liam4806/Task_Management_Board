@@ -20,6 +20,9 @@ Passport.js is used for User Authentication and Socket.io is used for friend lin
 Users must log in through their Google ID to use this board. When they log in, it will take a username, email, and google ID to create a new profile in the Database.
 Passport.js is used.
 
+<img width="496" alt="TMB_GoogleLog" src="https://github.com/liam4806/Task_Management_Board/assets/95008167/1554fdcf-6a20-4037-a908-6a178f4ec1d8">
+
+
 ## Home Page
 
 <img width="1430" alt="TMB_Home" src="https://github.com/liam4806/Task_Management_Board/assets/95008167/3c748f2c-eaf6-4736-8855-67dd6ae4c5ca">
