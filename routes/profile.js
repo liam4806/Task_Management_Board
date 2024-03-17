@@ -31,10 +31,10 @@ router.get("/search", function (req, res) {
   let sent = [];
   let friends = [];
   let received = [];
+  let friend_ids =[];
   received = req.user.request;
   sent = req.user.sentRequest;
   friends = req.user.friendsList;
-
   User.find({ _id: { $ne: req.user._id } }).then((result) => {
     res.render("search", {
       result: result,
@@ -94,9 +94,7 @@ router.post("/search", function (req, res) {
         if (req.body.receiverName) {
           await User.findByIdAndUpdate(req.user._id, {
             $push: {
-              sentRequest: {
-                userId: req.body.receiverName,
-              },
+              sentRequest: req.body.receiverName,
             },
           });
         }
@@ -117,16 +115,14 @@ router.post("/search", function (req, res) {
           },
           {
             $push: {
-              friendsList: {
-                friendId: req.body.senderId,
-                friendName: req.body.senderName,
-              },
+              friendsList: req.body.senderId,
             },
             $pull: {
               request: {
                 userId: req.body.senderId,
                 name: req.body.senderName,
               },
+              sentRequest: req.body.receiver_Id,
             },
             $inc: { totalRequest: -1 },
           }
@@ -143,15 +139,10 @@ router.post("/search", function (req, res) {
           },
           {
             $push: {
-              friendsList: {
-                friendId: req.user._id,
-                friendName: req.user.name,
-              },
+              friendsList: req.user._id,
             },
             $pull: {
-              sentRequest: {
-                name: req.user.name,
-              },
+              sentRequest: req.body.receiver_Id,
             },
           }
         );
@@ -169,6 +160,17 @@ router.post("/search", function (req, res) {
               request: {
                 userId: req.body.user_Id,
               },
+              sentRequest: req.body.receiver_Id,
+            },
+          }
+        );
+        await User.findByIdAndUpdate(
+          {
+            _id: req.body.user_Id,
+          },
+          {
+            $pull: {
+              sentRequest: req.body.receiver_Id,
             },
           }
         );

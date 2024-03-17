@@ -12,16 +12,16 @@ const UserSchema = new Schema ({
         }
     ],
     sentRequest:[{
-    userId: {type: mongoose.Schema.Types.ObjectId, ref: "User"}
+    type: Schema.Types.ObjectId, ref: "User"
     }],
     request: [{
-    userId: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+    userId: {type: Schema.Types.ObjectId, ref: "User"},
     name: {type: String, default: ""}
     }],
-    friendsList: [{
-    friendId: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
-    friendName: {type: String, default: ""}
-    }],
+    friendsList: [
+    {type: Schema.Types.ObjectId, 
+    ref: "User"}
+    ],
     totalRequest: {type: Number, default:0}
 });
 
