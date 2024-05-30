@@ -2,11 +2,7 @@
 <%- include('./layout/navbar')%>
 
 <body>
-<h2>Search Friends</h2>
-<form action="/profile/search" method="post">
-	<input type="text" name="searchfriend" placeholder="username">
-	<input type="submit" value="search">
-</form>
+
 
 <hr>
     <% result.forEach((user)=> {%> 

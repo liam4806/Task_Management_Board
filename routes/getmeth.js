@@ -98,7 +98,15 @@ router.get("/:teamid/project/:pjid/task/:id", authcheck, async (req, res) => {
 router.get("/create", authcheck, (req, res) => {
   User.find()
     .then((data) => {
-      res.render("teamcreate", { userdata: data });
+      user_friends = []
+      data.forEach((user)=>{
+        if(req.user.friendsList.includes(user.id)){
+          user_friends.push(user)
+        }
+      }
+      )
+      console.log(user_friends)
+      res.render("teamcreate", { userdata: user_friends });
     })
     .catch((err) => console.log(err));
 });

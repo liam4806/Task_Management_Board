@@ -6,7 +6,7 @@
         <% teams.forEach((team)=>{%> 
             <div class="Team">
                 <a href="/team/<%=team._id%>"><h2><%=team.team_name%></h2></a>
-                <div class="task-container" style="overflow:scroll; width:350px; height:200px;">
+                <div class="task-container" >
                 
                     <% team['projects'].forEach((project)=>{%> 
                      <div class="tasklist">
