@@ -45,6 +45,7 @@ router.delete("/task/:id/:taskid", async (req, res) => {
 
 router.delete("/team/:id", async (req, res) => {
     const team= await Team.findById(req.params.id);
+    if(team.projects){
     for(let i=0; i<team.projects.length; i++){
         const project = await Project.findById(team.projects[i]);
         projdelete(project);
@@ -56,8 +57,9 @@ router.delete("/team/:id", async (req, res) => {
       });
     }
     await Team.findByIdAndDelete({_id: req.params.id});
-    res.redirect("/");
-
+    
+  }
+  res.redirect("/");
 });
 
 module.exports = router;

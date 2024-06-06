@@ -77,7 +77,10 @@ router.post("/project/task/detail/:id", async (req, res) => {
 
 //endpoint for creating team
 router.post("/team", async (req, res) => {
-  req.body.userarray.push(req.user.id)
+  if (Array.isArray(req.body.userarray) === false){
+		req.body.userarray = [req.body.userarray]
+  }
+  req.body.userarray.push(req.user.id);
   const Data = new Team({
     team_name: req.body.team_name,
     users: req.body.userarray,

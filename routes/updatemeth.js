@@ -8,7 +8,7 @@ const Task = require("../models/task");
 const Team = require("../models/team");
 const User = require("../models/user");
 const router = express.Router();
-
+const { ObjectId } = require("mongodb");
 const authcheck = (req, res, next) => {
     // next();
   if(!req.user){
@@ -80,10 +80,15 @@ router.put("/:teamid", (req, res) => {
   Team.findById(req.params.teamid).then((data) => {
     data.team_name = req.body.team_name;
     data.users = req.body.users;
+
     let deleting_team_id = new mongoose.Types.ObjectId(req.params.teamid);
     data.save().then(async() => {
+      if(Array.isArray(req.body.users) === false){
+        req.body.users = [req.body.users]
+      }
       for (let i = 0; i < req.body.users.length; i++) {
-        await User.findByIdAndUpdate(req.body.users[i], {
+        const user_id = new mongoose.Types.ObjectId(req.body.users[i]);
+        await User.findByIdAndUpdate(user_id, {
           $pull: { teamids: deleting_team_id},
         });
       }
