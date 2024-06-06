@@ -80,14 +80,15 @@ router.put("/:teamid", (req, res) => {
   Team.findById(req.params.teamid).then((data) => {
     data.team_name = req.body.team_name;
     data.users = req.body.users;
+    let deleting_team_id = new mongoose.Types.ObjectId(req.params.teamid);
     data.save().then(async() => {
       for (let i = 0; i < req.body.users.length; i++) {
         await User.findByIdAndUpdate(req.body.users[i], {
-          $pull: { teamids: req.params.teamid },
+          $pull: { teamids: deleting_team_id},
         });
       }
       res.redirect(`/team/${req.params.teamid}`);
-    });
+    }).catch((err)=> console.log(err));
   });
 });
 
